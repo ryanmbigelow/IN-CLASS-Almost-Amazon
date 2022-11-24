@@ -1,5 +1,5 @@
 import {
-  deleteSingleAuthor, getAuthors, getSingleAuthor
+  getAuthors, getSingleAuthor
 } from '../api/authorData';
 import {
   deleteBook, getBooks, getSingleBook
@@ -8,7 +8,7 @@ import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
-import { getBookDetails, getAuthorDetails } from '../api/mergedData';
+import { getBookDetails, getAuthorDetails, deleteAuthorBookRelationship } from '../api/mergedData';
 import viewBook from '../pages/viewBook';
 import viewAuthor from '../pages/viewAuthor';
 
@@ -49,7 +49,7 @@ const domEvents = (user) => {
       if (window.confirm('Want to delete?')) {
         console.warn('CLICKED DELETE AUTHOR', e.target.id);
         const [, firebaseKey] = e.target.id.split('--');
-        deleteSingleAuthor(firebaseKey).then(() => {
+        deleteAuthorBookRelationship(firebaseKey).then(() => {
           getAuthors(user.uid).then(showAuthors);
         });
       }
